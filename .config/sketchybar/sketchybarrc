@@ -1,0 +1,116 @@
+#!/bin/bash
+
+source "$CONFIG_DIR/colors.sh" # Loads all defined colors
+
+PLUGIN_DIR="$CONFIG_DIR/plugins"
+ITEM_DIR="$CONFIG_DIR/items"
+
+##### Adding aeropsace layouts #####
+
+# Add workspaces for all monitors
+for monitor in $(aerospace list-monitors --format "%{monitor-appkit-nsscreen-screens-id}"); do
+  for sid in $(aerospace list-workspaces --monitor "$monitor"); do
+    # Determine which display this workspace should be shown on
+    display_id="1"
+    if [ "$sid" -ge 6 ] && [ "$sid" -le 7 ]; then
+      display_id="2"
+    fi
+    
+    sketchybar --add item space.$sid left \
+      --set space.$sid display="$display_id" \
+      --subscribe space.$sid aerospace_workspace_change \
+      --set space.$sid \
+      drawing=on \
+      background.color=0x44ffffff \
+      background.corner_radius=5 \
+      background.drawing=on \
+      background.border_color=0xAAFFFFFF \
+      background.border_width=0 \
+      background.height=25 \
+      icon="$sid" \
+      icon.padding_left=10 \
+      icon.shadow.distance=4 \
+      icon.shadow.color=0xA0000000 \
+      label.font="sketchybar-app-font:Regular:16.0" \
+      label.padding_right=20 \
+      label.padding_left=0 \
+      label.y_offset=-1 \
+      label.shadow.drawing=off \
+      label.shadow.color=0xA0000000 \
+      label.shadow.distance=4 \
+      click_script="aerospace workspace $sid" \
+      script="$CONFIG_DIR/plugins/aerospace.sh $sid"
+  done
+done
+
+# Load Icons on startup for all monitors
+for monitor in $(aerospace list-monitors); do
+  for sid in $(aerospace list-workspaces --monitor "$monitor" --empty no); do
+    apps=$(aerospace list-windows --workspace "$sid" | awk -F'|' '{gsub(/^ *| *$/, "", $2); print $2}')
+
+    sketchybar --set space.$sid drawing=on
+
+    icon_strip=" "
+    if [ "${apps}" != "" ]; then
+      while read -r app; do
+        icon_strip+=" $($CONFIG_DIR/plugins/icon_map_fn.sh "$app")"
+      done <<<"${apps}"
+    else
+      icon_strip=""
+    fi
+    sketchybar --set space.$sid label="$icon_strip"
+  done
+done
+
+##### Bar Appearance #####
+# Configuring the general appearance of the bar, these are only some of the
+# options available. For all options see:
+# https://felixkratz.github.io/SketchyBar/config/bar
+# If you are looking for other colors, see the color picker:
+# https://felixkratz.github.io/SketchyBar/config/tricks#color-picker
+
+sketchybar --bar height=37        \
+                 blur_radius=30   \
+                 position=top     \
+                 sticky=off       \
+                 padding_left=10  \
+                 padding_right=10 \
+                 color=$BAR_COLOR
+
+##### Changing Defaults #####
+# We now change some default values that are applied to all further items
+# For a full list of all available item properties see:
+# https://felixkratz.github.io/SketchyBar/config/items
+
+sketchybar --default icon.font="SF Pro:Semibold:15.0"  \
+                     icon.color=$WHITE                 \
+                     label.font="SF Pro:Semibold:15.0" \
+                     label.color=$WHITE                \
+                     background.color=$ITEM_BG_COLOR       \
+                     background.corner_radius=5            \
+                     background.height=24                  \
+                     padding_left=5                        \
+                     padding_right=5                       \
+                     label.padding_left=4                  \
+                     label.padding_right=10                \
+                     icon.padding_left=10                  \
+                     icon.padding_right=4
+
+# -- Left Side Items --
+source $ITEM_DIR/front_app.sh
+
+# -- Right Side Of Notch Items --
+source $ITEM_DIR/media.sh
+
+# -- Right Side Items --
+source $ITEM_DIR/calendar.sh
+source $ITEM_DIR/volume.sh
+source $ITEM_DIR/battery.sh
+source $ITEM_DIR/cpu.sh
+
+
+##### Finalizing Setup #####
+# The below command is only needed at the end of the initial configuration to
+# force all scripts to run the first time, it should never be run in an item script.
+
+sketchybar --update
