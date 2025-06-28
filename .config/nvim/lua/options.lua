@@ -46,3 +46,6 @@ opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" } -- Customize symbols
 opt.inccommand = "split" -- Show live substitution preview
 opt.confirm = true -- Confirm before quitting modified buffer
 opt.wrap = true -- Wrap lines by default (can un-toggle with)
+
+-- views can only be fully collapsed with the global statusline
+opt.laststatus = 3

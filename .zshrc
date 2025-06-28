@@ -1,4 +1,6 @@
 # ~/.zshrc
+source ~/.zsh_env_private # Env private variables not tracked by git
+
 
 ### ⚙️ Variables básicas
 export ZSH="$HOME/.oh-my-zsh"
@@ -40,4 +42,6 @@ setopt correct_all
 
 ### 🧹 Limpieza visual
 unsetopt BEEP
+
+alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
