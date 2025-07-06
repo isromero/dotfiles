@@ -11,7 +11,6 @@ return {
 		require("mason-lspconfig").setup({
 			ensure_installed = {
 				"gopls", -- Go
-				"ts_ls", -- React / JS / TS
 				"lua_ls", -- Lua (for Neovim config)
 			},
 		})
@@ -20,9 +19,6 @@ return {
 
 		-- Go
 		lspconfig.gopls.setup({})
-
-		-- React (JS / TS)
-		lspconfig.ts_ls.setup({})
 
 		-- Lua (for Neovim config)
 		lspconfig.lua_ls.setup({

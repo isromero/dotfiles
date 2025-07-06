@@ -92,7 +92,6 @@ outer.left = 20
 # 'main' binding mode must be always presented
 # Fallback value (if you omit the key): mode.main.binding = {}
 [mode.main.binding]
-
 # All possible keys:
 # - Letters.        a, b, c, ..., z
 # - Numbers.        0, 1, 2, ..., 9
@@ -158,12 +157,14 @@ cmd-1 = 'workspace 1'
 cmd-2 = 'workspace 2'
 cmd-3 = 'workspace 3'
 cmd-4 = 'workspace 4'
+cmd-5 = 'workspace 5'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
 cmd-shift-1 = 'move-node-to-workspace 1'
 cmd-shift-2 = 'move-node-to-workspace 2'
 cmd-shift-3 = 'move-node-to-workspace 3'
 cmd-shift-4 = 'move-node-to-workspace 4'
+cmd-shift-5 = 'move-node-to-workspace 5'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
 ctrl-tab = 'workspace-back-and-forth'
@@ -200,19 +201,23 @@ run = ['move-node-to-workspace 2']
 
 [[on-window-detected]]
 if.app-id ='com.mitchellh.ghostty' # Ghostty
-run = ['move-node-to-workspace 3']
+run = [
+  'layout floating', # FIX GHOSTTY PROBLEM WITH AEROSPACE
+  'move-node-to-workspace 2'
+]
 
 [[on-window-detected]]
-if.app-id ='io.beekeeperstudio.desktop' # Beekeper Studio
-run = ['move-node-to-workspace 3']
+if.app-id ='com.tinyapp.TablePlus' # TablePlus
+run = ['move-node-to-workspace 4']
 
 [[on-window-detected]]
 if.app-id ='com.tinyspeck.slackmacgap' # Slack
-run = ['move-node-to-workspace 4']
+run = ['move-node-to-workspace 5']
 
 # force certain workspaces to certain monitors
 [workspace-to-monitor-force-assignment]
 1 = 'main'
 2 = 'main'
-3 = 'main'                  
-4 = 'secondary'
+3 = 'main'
+4 = 'main'
+5 = 'secondary'
