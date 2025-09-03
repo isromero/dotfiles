@@ -17,6 +17,7 @@ return {
 		{ "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "Grep in project" },
 		{ "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Find buffers" },
 		{ "<leader>fh", "<cmd>Telescope help_tags<cr>", desc = "Find help" },
+		{ "<leader>fr", "<cmd>Telescope resume<cr>", desc = "Resume last telescope" },
 	},
 	config = function()
 		require("telescope").setup({

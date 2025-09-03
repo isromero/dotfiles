@@ -191,27 +191,52 @@ cmd-shift-k = ['join-with up', 'mode main']
 cmd-shift-l = ['join-with right', 'mode main']
 
 # Default apps to certain workspaces
+
+# Workspace 1 (browser)
 [[on-window-detected]]
 if.app-id ='company.thebrowser.Browser' # Arc
 run = ['move-node-to-workspace 1']
 
+# Workspace 2 (code editor)
 [[on-window-detected]]
 if.app-id ='com.todesktop.230313mzl4w4u92' # Cursor
 run = ['move-node-to-workspace 2']
 
+# Workspace 3 (terminal)
 [[on-window-detected]]
-if.app-id ='com.mitchellh.ghostty' # Ghostty
-run = [
-  'layout floating', # FIX GHOSTTY PROBLEM WITH AEROSPACE
-  'move-node-to-workspace 2'
-]
+if.app-id ='org.alacritty' # Alacritty
+run = ['move-node-to-workspace 3']
 
+# Workspace 4 (database, kubernetes, etc)
 [[on-window-detected]]
 if.app-id ='com.tinyapp.TablePlus' # TablePlus
 run = ['move-node-to-workspace 4']
 
 [[on-window-detected]]
+if.app-id ='com.electron.kontena-lens' # Lens
+run = ['move-node-to-workspace 4']
+
+
+# Workspace 5 (secondary, personal, communications...)
+
+[[on-window-detected]]
+if.app-id ='com.hnc.Discord' # Discord
+run = ['move-node-to-workspace 5']
+
+[[on-window-detected]]
+if.app-id ='net.whatsapp.WhatsApp' # WhatsApp
+run = ['move-node-to-workspace 5']
+
+[[on-window-detected]]
 if.app-id ='com.tinyspeck.slackmacgap' # Slack
+run = ['move-node-to-workspace 5']
+
+[[on-window-detected]]
+if.app-id ='notion.id' # Notion
+run = ['move-node-to-workspace 5']
+
+[[on-window-detected]]
+if.app-id ='md.obsidian' # Obsidian
 run = ['move-node-to-workspace 5']
 
 # force certain workspaces to certain monitors
